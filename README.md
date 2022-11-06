@@ -27,6 +27,9 @@
 ## Запуск
 
 ---
+<details>
+<summary>Локальный запуск</summary>
+
 **Создание виртуального окружения**
 ```sh
 python3 -m venv venv
@@ -43,7 +46,36 @@ pip install -r requirements.txt
 ```sh
 python3 app/manage.py migrate
 ```
+**Инициализация необходимых переменных окружения**
+```shell
+export DJANGO_ALLOWED_HOSTS="127.0.0.1"
+export SECRET_KEY=foo
+export DEBUG=1
+```
 **Запуск проекта**
-```sh
+```shell
 python3 app/manage.py runserver
 ```
+**Проект доступен по ссылке ниже:**
+```text
+http://127.0.0.1:8000/
+```
+</details>
+
+<details>
+<summary>Docker контейнер</summary>
+
+**Запуск сборки docker контейнера**
+```shell
+docker-compose build
+```
+**По завершению сборки контейнера, нужно его запустить**
+```shell
+docker-compose up -d 
+```
+
+**Проект доступен по ссылке ниже:**
+```text
+http://localhost:8000/
+```
+</details>
