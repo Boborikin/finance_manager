@@ -160,5 +160,4 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_TIMEZONE = "Europe/Minsk"
 
 
-
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
