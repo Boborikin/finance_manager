@@ -20,5 +20,3 @@ class Transaction(models.Model):
 
     class Meta:
         ordering = ('-created',)
-        verbose_name = 'транзакция'
-        verbose_name_plural = 'транзакции'

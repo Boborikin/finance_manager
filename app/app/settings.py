@@ -140,7 +140,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-# TODO: Добавить переменные окружения
 
 # Email settings
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'

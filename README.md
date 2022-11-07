@@ -1,27 +1,5 @@
 # Менеджер учёта расходов
 
-<details>
-<summary>Задание</summary>
-Минимальные требования:   
-- Регистрация пользователя   
-- Авторизация пользователя (по токену)   
-- Транзакции пользователя - CRUD
-С помощью транзакций происходит списание, начисление баланса пользователя.
-Транзакция должна содержать в себе: сумму\*, время\*, категорию\*, организацию\*, описание.
-Пользователь должен иметь возможность сортировать, фильтровать транзакции по времени, сумме, дате.
-   
-- Категории пользователя - CRUD
-При регистрации пользователь получает набор стандартных категорий:
-"Забота о себе", "Зарплата", "Здоровье и фитнес", "Кафе и рестораны", "Машина", "Образование", "Отдых и развлечения", "Платежи, комиссии", "Покупки: одежда, техника", "Продукты", "Проезд".
-Пользователь может изменять/удалять стандартные категории как пожелает, а также создавать свои.   
-- Просмотр профиля пользователя (информация о текущем балансе)   
-- Статистика пользователя.
-Реализовать отправку статистики на почту пользователя утром каждый день.
-Объём получаемой статистики можете выбрать сами.   
-</details>
-
-# Проверка
-
 ## Запуск
 <details>
 <summary>Локальный запуск</summary>
@@ -80,24 +58,20 @@ celery -A mail beat -l info
 **Инициализация необходимых 
 переменных окружения(2)**
 ```shell
-EMAIL_HOST=""
-EMAIL_HOST_USER=""
-EMAIL_HOST_PASSWORD=""
-EMAIL_PORT=465
-CELERY_BROKER_URL=""
+export EMAIL_HOST=""
+export EMAIL_HOST_USER=""
+export EMAIL_HOST_PASSWORD=""
+export EMAIL_PORT=465
+export CELERY_BROKER_URL=""
 ```
 
 </details>
 <details>
 <summary>Docker контейнер</summary>
 
-**Укажите необходимые переменные окружения в файле .env.dev**
+**Скопировать данные из файла <i>.env.example</i> в файл <i>.env</i> и изменить данные на ваши**
 
-**Запуск сборки docker контейнера**
-```shell
-docker-compose build
-```
-**По завершению сборки контейнера, нужно его запустить**
+**Для сборки и запуска**
 ```shell
 docker-compose up -d 
 ```
@@ -114,42 +88,37 @@ http://localhost:8000/
 
 **Регистрация пользователя**
 ```shell
-curl -X POST 'http://127.0.0.1/auth/register/' \
--H 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'username=<username>' \
---data-urlencode 'password=<password>' \
---data-urlencode 'password2=<password2>' \
---data-urlencode 'email=<email>' \
---data-urlencode 'first_name=<first_name>' \
---data-urlencode 'last_name=<last_name>'
+curl -X POST 'http://127.0.0.1:8000/auth/register/'\
+   -H 'Content-Type: application/json' \
+   -d '{"username":"<username>","password":"<password>","password_again":"<password>",
+"email":"<email>","first_name":"<first_name>","last_name":"<last_name>"}'
 ```
 **Вход пользователя**
 ```shell
-curl -X POST 'https://shrouded-ravine-45950.herokuapp.com/auth/login/' \
--H 'Content-Type: application/x-www-form-urlencoded' \
---data-urlencode 'username=postman' \
---data-urlencode 'password=string123'
+curl -X POST 'http://127.0.0.1:8000/auth/login/'\
+   -H 'Content-Type: application/json' \
+   -d '{"username":"<username>","password":"<password>"}'
 ```
-**Если все хорошо, вернется значение <i>access</i>**
+**Вернется значение <i>access</i>**.
 **Данное access значение используется для получения/изменения/создания данных**
 
 **Получение текущего баланса**
 ```shell
-curl -X GET 'https://http://127.0.0.1/api/v1/balance/' -H 'Authorization: Bearer <access>'
+curl -X GET 'http://127.0.0.1:8000/api/v1/balance/' -H 'Authorization: Bearer <access>'
 ```
 
 **Получение статистики**
 ```shell
-curl -X GET 'https://http://127.0.0.1/api/v1/balance/' -H 'Authorization: Bearer <access>'
+curl -X GET 'http://127.0.0.1:8000/api/v1/balance/' -H 'Authorization: Bearer <access>'
 ```
 
 **Получение ваших категорий**
 ```shell
-curl -X GET 'https://http://127.0.0.1/api/v1/categories/' -H 'Authorization: Bearer <access>'
+curl -X GET 'http://127.0.0.1:8000/api/v1/categories/' -H 'Authorization: Bearer <access>'
 ```
 **Список транзакций с сортировкой по убыванию даты создания**
 ```shell
-curl -X GET 'https://http://127.0.0.1/api/v1/categories/?ordering=-created' -H 'Authorization: Bearer <access>'
+curl -X GET 'http://127.0.0.1:8000/api/v1/transactions/?ordering=-created' -H 'Authorization: Bearer <access>'
 ```
 Доступные варианты сортировки:<br>
 `ordering=created` - по возрастанию<br>
