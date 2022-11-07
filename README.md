@@ -42,15 +42,15 @@ source venv/bin/activate
 ```sh
 pip install -r requirements.txt
 ```
-**Запуск миграции**
-```sh
-python3 app/manage.py migrate
-```
 **Инициализация необходимых переменных окружения**
 ```shell
 export DJANGO_ALLOWED_HOSTS="127.0.0.1"
 export SECRET_KEY=foo
 export DEBUG=1
+```
+**Запуск миграции**
+```sh
+python3 app/manage.py migrate
 ```
 **Запуск проекта**
 ```shell
