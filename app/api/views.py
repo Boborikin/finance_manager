@@ -37,8 +37,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         """При создании транзакции автором становится тот, кто создал"""
-        if self.request.user.is_authenticated:
-            instance = serializer.save(user=self.request.user)
+        instance = serializer.save(user=self.request.user)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -49,5 +48,4 @@ class CategoryViewSet(viewsets.ModelViewSet):
         return Category.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
-        if self.request.user.is_authenticated:
-            instance = serializer.save(user=self.request.user)
+        instance = serializer.save(user=self.request.user)
